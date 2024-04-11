@@ -28,20 +28,11 @@ export default {
       this.isConnected = false;
     },
 
-    // Fired when the server sends something on the "messageChannel" channel.
-    messageChannel(data) {
+    chat_broadcast_message(data) {
       this.socketMessage = data;
-      console.log("messageChannel run");
+      console.log("__chatBroadcastMessage run");
       console.log(data);
-    },
-
-    chatBroadcastMessage(data) {
-      this.socketMessage = data;
-      console.log("chatBroadcastMessage run");
-      console.log(data);
-    },
-
-    
+    }
   },
 
   methods: {
@@ -49,13 +40,8 @@ export default {
       this.$socket.emit('chat message', this.formModel);
       this.formModel = '';
     }
-    // pingServer() {
-    //   // Send the "pingServer" event to the server.
-    //   this.$socket.emit('pingServer', 'PING!')
-    // }
   }
 }
-
 
 </script>
 
