@@ -15,7 +15,6 @@ export default {
   data() {
     return {
       isConnected: false,
-      socketMessage: '',
       formModel: '',
     }
   },
@@ -28,10 +27,11 @@ export default {
       this.isConnected = false;
     },
 
-    chat_broadcast_message(data) {
-      this.socketMessage = data;
-      console.log("__chatBroadcastMessage run");
-      console.log(data);
+    chat_broadcast_message(msg) {
+      const item = document.createElement('li');
+      item.textContent = msg;
+      messages.appendChild(item);
+      window.scrollTo(0, document.body.scrollHeight);
     }
   },
 
