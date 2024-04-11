@@ -2,8 +2,8 @@
   <div id="app">
     <ul id="messages">
     </ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
+    <form id="form" @submit.prevent="send">
+      <input id="input" v-model="formModel" autocomplete="off" /><button>Send</button>
     </form>
   </div>
 </template>
@@ -12,6 +12,48 @@
 
 export default {
   name: 'App',
+  data() {
+    return {
+      isConnected: false,
+      socketMessage: '',
+      formModel: '',
+    }
+  },
+  sockets: {
+    connect() {
+      this.isConnected = true;
+    },
+
+    disconnect() {
+      this.isConnected = false;
+    },
+
+    // Fired when the server sends something on the "messageChannel" channel.
+    messageChannel(data) {
+      this.socketMessage = data;
+      console.log("messageChannel run");
+      console.log(data);
+    },
+
+    chatBroadcastMessage(data) {
+      this.socketMessage = data;
+      console.log("chatBroadcastMessage run");
+      console.log(data);
+    },
+
+    
+  },
+
+  methods: {
+    send() {
+      this.$socket.emit('chat message', this.formModel);
+      this.formModel = '';
+    }
+    // pingServer() {
+    //   // Send the "pingServer" event to the server.
+    //   this.$socket.emit('pingServer', 'PING!')
+    // }
+  }
 }
 
 
